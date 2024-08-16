@@ -38,6 +38,8 @@ class MailingSettings(models.Model):
     
     clients = models.ManyToManyField(Client)
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    
+    last_sent_time = models.DateTimeField(null=True, blank=True)
  
     
 class Attempt(models.Model):

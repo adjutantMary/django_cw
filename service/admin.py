@@ -8,6 +8,10 @@ class MyAdminSite(admin.AdminSite):
 mail_admin = MyAdminSite(name="mail-admin")
 
 
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'comment',]
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['subject', 'body',]
@@ -24,4 +28,7 @@ class AttemtAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
     
 mail_admin.register(Message, MessageAdmin)
+mail_admin.register(Client, ClientAdmin)
+mail_admin.register(MailingSettings, MailingAdmin)
+mail_admin.register(Attempt, AttemtAdmin)
     
