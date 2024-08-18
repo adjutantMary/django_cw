@@ -4,6 +4,7 @@ from .models import *
 
 
 class ClientForm(forms.ModelForm):
+    '''Форма записи клиента сервиса'''
     def __init__(self, *args, **kwargs):
         #тут надо добавить настройку пользователя после создания модели User
         user = kwargs.pop('user', None)
@@ -21,7 +22,9 @@ class ClientForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={'rows': 4}),
         }
         
+        
 class MailingForm(forms.ModelForm):
+    '''Форма настройки рассылки'''
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         user = None
@@ -52,6 +55,7 @@ class MailingForm(forms.ModelForm):
         
     
 class MessageForm(forms.ModelForm):
+    '''Форма заполнения сообщения для рассылки'''
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(MessageForm, self).__init__(*args, **kwargs)
