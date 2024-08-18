@@ -24,6 +24,7 @@ APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 MY_APPS = [
     'service',
     "django_apscheduler",
+    # 'cw_django.service.management.commands.runappscheduler.SendEmailConfig',
 ]
 
 DEFAULT_APPS = [
@@ -130,3 +131,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.@gmail.com' 
+EMAIL_PORT = 465  
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = "polshkovamamariya@gmail.com"
+EMAIL_HOST_PASSWORD = "dfhe xewp ynub ptlb"
