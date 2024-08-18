@@ -28,7 +28,8 @@ class MailingSettings(models.Model):
         CREATED = 'C', 'Created'
         LAUNCHED = 'L', 'Launched'
         INACTIVE = 'I', 'Inactive'
-        
+    
+    name = models.CharField(max_length=128, blank=True, null=True)
     start_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     end_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     period = models.CharField(choices=Period.choices, default=Period.WEEKLY, max_length=2)
