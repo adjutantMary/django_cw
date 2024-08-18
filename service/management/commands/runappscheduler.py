@@ -1,5 +1,7 @@
 import logging
 import smtplib
+import pytz
+import datetime
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -18,16 +20,21 @@ logger = logging.getLogger(__name__)
 
 
 def my_job():
-  qs = MailingSettings.objects.filter(status='D')
+  zone = pytz.timezone(settings.TIME_ZONE)
+  current_datetime = datetime.now(zone)
+  qs = MailingSettings.objects.filter(status='C') \
+    .filter(is_active=True) \
+    .filter(date_start__lte=current_datetime) \
+    .filter(date_next__lte=current_datetime)
   for mailing in qs:
     message = mailing.message
-    clients_mail = mailing.clients.values_list('mail', flat=True)
+    clients_mail = mailing.clients.values_list('email', flat=True)
     
     try:
       send_mail(
         subject=message.subject,
         message=message.body,
-        from_email=settings.DEFAULT_FROM_EMAIL,
+        from_email=settings.EMAIL_HOST_USER,
         recipient_list=clients_mail,
         fail_silently=False
       )

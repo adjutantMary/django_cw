@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 
 class Client(models.Model):
     '''Клиент сервиса'''
@@ -25,7 +25,6 @@ class MailingSettings(models.Model):
         MONTHLY = 'M', 'Monthly'
     
     class Status(models.TextChoices):
-        DONE = 'D', 'Done'
         CREATED = 'C', 'Created'
         LAUNCHED = 'L', 'Launched'
         INACTIVE = 'I', 'Inactive'
@@ -33,8 +32,11 @@ class MailingSettings(models.Model):
     start_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     end_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     period = models.CharField(choices=Period.choices, default=Period.WEEKLY, max_length=2)
+    date_start = models.DateField(verbose_name='Дата начала рассылки', default=timezone.now)
+    date_next = models.DateTimeField(verbose_name="следующая дата рассылки", default=timezone.now)
     
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.INACTIVE, blank=True, null=True)
+    is_active = models.BooleanField(default=True, verbose_name='Активация рассылки')
     
     clients = models.ManyToManyField(Client)
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
